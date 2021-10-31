@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import request from "@/utils/request";
+import request from "@/utils/request.js";
 export default {
     name: "App",
     setup() {},

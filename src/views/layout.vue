@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-    name: "Layout",
-};
+  name: 'Layout'
+}
 </script>
-<style lang=""></style>
+<style lang="less"></style>

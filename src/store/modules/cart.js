@@ -1,7 +1,7 @@
 export default {
-  state() {
+  state () {
     return {
-      list: [],
-    };
-  },
-};
+      list: []
+    }
+  }
+}
