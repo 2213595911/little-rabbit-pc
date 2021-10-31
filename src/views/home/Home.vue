@@ -1,5 +1,5 @@
 <template>
-    <div class="hd">我是homepage组件</div>
+    <div class="container">我是homepage组件</div>
 </template>
 <script>
 export default {
@@ -7,7 +7,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.hd {
+.container {
     .hoverShadow();
     color: @xtxColor;
 }
