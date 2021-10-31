@@ -1,24 +1,19 @@
 <template>
-  <div>{{ $store.state.moduleA.username }}</div>
-  <div>{{ $store.state.moduleB.username }}</div>
-
-  <div>{{ $store.getters.newUser }}</div>
-  <div>{{ $store.getters["moduleB/newUser"] }}</div>
-  <button @click="changeUser">修改用户名称</button>
+    <div>
+        <button @click="fn">测试请求工具</button>
+    </div>
 </template>
 
 <script>
-import { useStore } from "vuex";
+import request from "@/utils/request";
 export default {
-  name: "App",
-  setup() {
-    const store = useStore();
-    function changeUser() {
-      // store.dispatch("moduleB/update");
-      store.commit("moduleB/UPDATE");
-    }
-    return { changeUser };
-  },
+    name: "App",
+    setup() {
+        function fn() {
+            request("/login", "get", { a: 100 });
+        }
+        return { fn };
+    },
 };
 </script>
 
