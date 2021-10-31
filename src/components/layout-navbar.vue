@@ -25,12 +25,14 @@
 </template>
 <script>
 import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
     name: "AppTopnav",
     setup() {
         const store = useStore();
-        // 默认就是响应式的数据我们不需要自己处理
-        const profile = store.state.user.profile;
+        const profile = computed(() => {
+            return store.state.user.profile;
+        });
         return { profile };
     },
 };

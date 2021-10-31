@@ -3,7 +3,7 @@
     <!-- <nav>顶部通栏</nav> -->
     <AppTopnav />
     <!-- 头部组件 -->
-    <header>头部组件</header>
+    <AppHeader />
     <!-- 内容容器 -->
     <div class="mian">
         <router-view></router-view>
@@ -13,9 +13,10 @@
 </template>
 <script>
 import AppTopnav from "@/components/layout-navbar";
+import AppHeader from "@/components/layout-header";
 export default {
     name: "Layout",
-    components: { AppTopnav },
+    components: { AppTopnav, AppHeader },
 };
 </script>
 <style lang="less"></style>

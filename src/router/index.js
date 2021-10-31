@@ -1,19 +1,19 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from "vue-router";
 
 // 路由懒加载
-const Layout = () => import('@/views/Layout')
-const Home = () => import('@/views/home/Home')
+const Layout = () => import("@/views/Layout");
+const Home = () => import("@/views/home/Home");
 const routes = [
-  {
-    path: '/',
-    component: Layout,
-    children: [{ path: '/', component: Home }]
-  }
-]
+    {
+        path: "/",
+        component: Layout,
+        children: [{ path: "/", component: Home }],
+    },
+];
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-})
+    history: createWebHashHistory(),
+    routes,
+});
 
-export default router
+export default router;
