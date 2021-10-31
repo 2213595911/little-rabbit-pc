@@ -28,20 +28,17 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (res) => res.data,
     (err) => {
-        console.log(err);
-        if (err.response && err.response.meta === 401) {
+        if (err.response && err.response.status === 401) {
             // 1. 清除无效用户信息
             store.commit("setUser", {});
             // 2. 跳转到登陆页面,用户登陆成功之后需要返回当前的这个页面,所以我们需要将当前的路由路径传递过去
             // 当前路由地址：
             // 组件中:$route.fullPath
-            // js模块中:router.currentRoute.fullPath
-            // encodeRULComponent 转换url编码，防止解析地址错误
-            console.log(router.currentRoute);
-
+            // js模块中:router.currentRoute.value.fullPath,注意返回的是一个ref对象
+            // encodeRUIComponent 转换url编码，防止解析地址错误
             router.push(
-                `/login?redirectUrl=${encodeURLComponent(
-                    router.currentRoute.fullPath
+                `/login?redirectUrl=${encodeURIComponent(
+                    router.currentRoute.value.fullPath
                 )}`
             );
         }

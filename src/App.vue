@@ -10,7 +10,7 @@ export default {
     name: "App",
     setup() {
         function fn() {
-            request("/login", "get", { a: 100 });
+            request("/member/profile", "get", { a: 100 });
         }
         return { fn };
     },
