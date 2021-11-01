@@ -3,7 +3,7 @@
     <AppTopnav />
     <!-- 头部组件 -->
     <AppHeader />
-    <!-- 吸顶导航组件 -->
+    <!-- 吸顶导航栏 -->
     <AppHeaderNav />
     <!-- 内容容器 -->
     <div class="main">
