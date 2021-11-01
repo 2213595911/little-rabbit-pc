@@ -1,7 +1,8 @@
 export default {
-  state () {
-    return {
-      list: []
-    }
-  }
-}
+    namespaced: true,
+    state() {
+        return {
+            list: [],
+        };
+    },
+};
