@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 // 路由懒加载
 const Layout = () => import("@/views/Layout");
-const Home = () => import("@/views/home/Home");
+const Home = () => import("@/views/home");
 const TopCategory = () => import("@/views/category");
 const SubCategory = () => import("@/views/category/sub");
 
