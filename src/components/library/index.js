@@ -5,10 +5,32 @@
 import XtxSkeleton from "./xtx-skeleton";
 import XtxCarousel from "./xtx-carousel";
 import XtxMore from "./xtx-more";
+import defaultImg from "@/assets/images/200.png";
 export default {
     install(app) {
         app.component(XtxSkeleton.name, XtxSkeleton);
         app.component(XtxCarousel.name, XtxCarousel);
         app.component(XtxMore.name, XtxMore);
+        defineDirective(app);
     },
 };
+
+function defineDirective(app) {
+    app.directive("lazy", {
+        // 在vue3中表示dom加载完毕的是mounted
+        mounted(element, { value }) {
+            const observer = new IntersectionObserver(
+                ([{ isIntersecting }]) => {
+                    if (isIntersecting) {
+                        observer.unobserve(element);
+                        element.onerror = () => (element.src = defaultImg);
+                        element.src = value;
+                    }
+                },
+                { threshold: 0 }
+            );
+            observer.observe(element);
+        },
+        // 创建监视对象
+    });
+}

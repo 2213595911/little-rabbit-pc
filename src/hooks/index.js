@@ -12,7 +12,6 @@ function useLazyData(apiFn) {
         target,
         ([{ isIntersecting }]) => {
             if (isIntersecting) {
-                console.log("进入到了监听的范围内");
                 // 停止监听
                 stop();
                 apiFn().then((value) => (result.value = value.result));

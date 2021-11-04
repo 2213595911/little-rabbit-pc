@@ -9,7 +9,7 @@
             </template>
             <div class="box">
                 <RouterLink class="cover" :to="`/category/${item.id}`">
-                    <img :src="item.picture" alt="" />
+                    <img v-lazy="item.picture" alt="" />
                     <strong class="label">
                         <span>{{ item.name }}馆</span>
                         <span>{{ item.saleInfo.slice(0, 6) }}</span>
@@ -34,10 +34,7 @@ export default {
     name: "HomeProduct",
     components: { HomePanel, HomeGoods },
     setup() {
-        /* const product = ref();
-        findProduct().then((value) => (product.value = value.result)); */
         const { target, result } = useLazyData(findProduct);
-        console.log(result);
         return { product: result, target };
     },
 };

@@ -15,7 +15,7 @@
         </ul>
         <!-- 弹层 -->
         <div class="layer">
-            <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
+            <h4>{{ currentCat && currentCat.goods ? "分类" : "品牌" }}推荐 <small>根据您的购买或浏览记录推荐</small></h4>
             <ul v-if="currentCat && currentCat.goods && currentCat.goods.length">
                 <li v-for="item in currentCat.goods" :key="item.id">
                     <RouterLink to="/">
