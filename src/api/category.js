@@ -1,5 +1,5 @@
 // 商品分类接口api
-import request from "@/utils/request";
+import request from '@/utils/request'
 
 /**
  * 获取一级分类、二级分类、以及所有商品
@@ -16,4 +16,13 @@ export function findAllCategory () {
  */
 export function findTopCategory (id) {
     return request('/category', 'get', { id })
+}
+
+/**
+ * 获取二级分类的筛选区数据
+ * @param {String} 二级分类的id
+ * @returns
+ */
+export function findFilterData (id) {
+    return request('/category/sub/filter', 'get', { id })
 }

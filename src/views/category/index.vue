@@ -5,7 +5,7 @@
             <XtxBread>
                 <XtxBreadItem to="/">首页</XtxBreadItem>
                 <transition name="fade-right" mode="out-in">
-                    <XtxBreadItem :key="topCategory.id">{{ topCategory.name }}</XtxBreadItem>
+                    <XtxBreadItem v-if="topCategory" :key="topCategory.id">{{ topCategory.name }}</XtxBreadItem>
                 </transition>
             </XtxBread>
             <!-- 轮播图 -->
@@ -36,7 +36,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import { findBanner } from '@/api/home'
 import { ref, computed, watch } from 'vue'
@@ -55,13 +54,22 @@ export default {
         // 获取轮播图数据
         findBanner().then((value) => (slider.value = value.result))
         // 获取id对应的商品分类
-        let topCategory = computed(() => store.state.category.categoryList.find((item) => item.id == route.params.id))
-        if (!topCategory.value) topCategory = ref({})
+        // let topCategory = computed(() => store.state.category.categoryList.find((item) => item.id === route.params.id))
+        // if (!topCategory.value) topCategory = []
+        const topCategory = computed(() => {
+            let cate = {}
+            const item = store.state.category.categoryList.find(item => item.id === route.params.id)
+            if (item) cate = item
+            return cate
+        })
         // 获取一级分类的二级类目推荐商品列表
         let subList = ref([])
         watch(
             () => route.params.id,
-            (newValue) => newValue && getSubList(),
+            (newValue) => {
+                // 只有在跳转顶级类目的时候才请求数据
+                if (`/category/${newValue}` === route.path) getSubList()
+            },
             { immediate: true }
         )
 

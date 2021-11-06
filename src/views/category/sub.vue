@@ -1,9 +1,23 @@
-<template>我是二级菜单路由</template>
+<template>
+    <div class="sub-category">
+        <div class="container">
+            <SubBread />
+            <SubFilter />
+        </div>
+    </div>
+</template>
 
 <script>
+import SubBread from './components/sub-bread'
+import SubFilter from './components/sub-filter'
+
 export default {
-    name: "SubCategory",
-};
+    name: 'SubCategory',
+    components: {
+        SubBread,
+        SubFilter
+    }
+}
 </script>
 
 <style></style>
