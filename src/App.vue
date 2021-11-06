@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import request from "@/utils/request.js";
 export default {
-    name: "App",
-    setup() {},
+    name: 'App',
+    setup () {
+    }
 };
 </script>
 

@@ -4,9 +4,10 @@ export default {
     install(app) {
         // 通过函数身上的keys方法可以获取所有符合正则的文件路径
         importFn.keys().forEach((path) => {
-            const component = importFn(path).default; // 获取组件的实例对象
-            app.component(component.name, component);
-        });
+            const component = importFn(path).default // 获取组件的实例对象
+            app.component(component.name, component)
+        })
+        defineDirective(app)
     },
 };
 function defineDirective(app) {
