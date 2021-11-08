@@ -1,4 +1,5 @@
 // 插件就是拓展vue原有的功能：全局组件，自定义指令，挂载原型对象，注意：没有全局过滤器
+import defaultImg from '@/assets/images/200.png'
 const importFn = require.context("./", false, /\.vue$/);
 export default {
     install(app) {

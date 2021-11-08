@@ -26,3 +26,7 @@ export function findTopCategory (id) {
 export function findFilterData (id) {
     return request('/category/sub/filter', 'get', { id })
 }
+
+export function findGoodsList (params) {
+    return request('/category/goods/temporary', 'post', params)
+}
