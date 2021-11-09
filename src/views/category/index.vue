@@ -15,10 +15,10 @@
                 <h3>全部分类</h3>
                 <ul>
                     <li v-for="sub in topCategory.children" :key="sub.id">
-                        <a href="javascript:;">
+                        <router-link :to="`/category/sub/${sub.id}`">
                             <img :src="sub.picture" />
                             <p>{{ sub.name }}</p>
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -37,53 +37,53 @@
     </div>
 </template>
 <script>
-import { findBanner } from '@/api/home'
-import { ref, computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
-import GoodsItem from './components/goods-item'
-import { findTopCategory } from '@/api/category'
+import { findBanner } from "@/api/home";
+import { ref, computed, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import GoodsItem from "./components/goods-item";
+import { findTopCategory } from "@/api/category";
 
 export default {
-    name: 'TopCategory',
+    name: "TopCategory",
     components: { GoodsItem },
-    setup () {
-        const slider = ref([])
-        const route = useRoute()
-        const store = useStore()
+    setup() {
+        const slider = ref([]);
+        const route = useRoute();
+        const store = useStore();
         // 获取轮播图数据
-        findBanner().then((value) => (slider.value = value.result))
+        findBanner().then((value) => (slider.value = value.result));
         // 获取id对应的商品分类
         // let topCategory = computed(() => store.state.category.categoryList.find((item) => item.id === route.params.id))
         // if (!topCategory.value) topCategory = []
         const topCategory = computed(() => {
-            let cate = {}
-            const item = store.state.category.categoryList.find(item => item.id === route.params.id)
-            if (item) cate = item
-            return cate
-        })
+            let cate = {};
+            const item = store.state.category.categoryList.find((item) => item.id === route.params.id);
+            if (item) cate = item;
+            return cate;
+        });
         // 获取一级分类的二级类目推荐商品列表
-        let subList = ref([])
+        let subList = ref([]);
         watch(
             () => route.params.id,
             (newValue) => {
                 // 只有在跳转顶级类目的时候才请求数据
-                if (`/category/${newValue}` === route.path) getSubList()
+                if (`/category/${newValue}` === route.path) getSubList();
             },
             { immediate: true }
-        )
+        );
 
-        function getSubList () {
-            findTopCategory(route.params.id).then((value) => (subList.value = value.result))
+        function getSubList() {
+            findTopCategory(route.params.id).then((value) => (subList.value = value.result));
         }
 
         return {
             slider,
             topCategory,
-            subList
-        }
-    }
-}
+            subList,
+        };
+    },
+};
 </script>
 
 <style scoped lang="less">

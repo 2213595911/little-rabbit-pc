@@ -23,72 +23,85 @@
 </template>
 
 <script>
-import SubBread from './components/sub-bread'
-import SubFilter from './components/sub-filter'
-import SubSort from './components/sub-sort'
-import GoodsItem from './components/goods-item'
-import { findGoodsList } from '@/api/category'
-import { useRoute } from 'vue-router'
-import { ref, watch } from 'vue'
+import SubBread from "./components/sub-bread";
+import SubFilter from "./components/sub-filter";
+import SubSort from "./components/sub-sort";
+import GoodsItem from "./components/goods-item";
+import { findGoodsList } from "@/api/category";
+import { useRoute } from "vue-router";
+import { ref, watch } from "vue";
 
 export default {
-    name: 'SubCategory',
+    name: "SubCategory",
     components: {
         SubBread,
         SubFilter,
         SubSort,
-        GoodsItem
+        GoodsItem,
     },
-    setup () {
-        const loading = ref(false)
-        const finished = ref(false)
+    setup() {
+        const loading = ref(false);
+        const finished = ref(false);
         // 商品列表数据
-        const goodsList = ref([])
+        const goodsList = ref([]);
         // 请求数据的时候携带的参数
         let reqParams = {
             page: 1,
-            pageSize: 20
-        }
-        const route = useRoute()
+            pageSize: 20,
+        };
+        const route = useRoute();
 
-        function getData () {
-            loading.value = true
-            reqParams.categoryId = route.params.id
+        function getData() {
+            loading.value = true;
+            // 将品牌的id存储到请求数据中
+            reqParams.categoryId = route.params.id;
             findGoodsList(reqParams).then(({ result }) => {
+                // 如果有数据就渲染页面
                 if (result.items.length) {
                     // 将返回到的数据push到数据中,因为我们还需要加载更多所以不能直接替换掉
-                    goodsList.value.push(...result.items)
-                    reqParams.page++
+                    goodsList.value.push(...result.items);
+                    // 每一次请求之后都需要让当前页数加一
+                    reqParams.page++;
                 } else {
-                    finished.value = true
+                    // 如果没有数据那么就将请求完毕状态打开
+                    finished.value = true;
                 }
-                loading.value = false
-            })
-            watch(() => route.params.id, (newValue) => {
-                if (`/category/sub/${newValue}` === route.path) {
-                    goodsList.value = []
-                    reqParams = {
-                        page: 1,
-                        pageSize: 20
+                // 将laoding动画取消
+                loading.value = false;
+            });
+            // 监视路由id的变化
+            watch(
+                () => route.params.id,
+                (newValue) => {
+                    // 判断是否是处于二级分类
+                    if (`/category/sub/${newValue}` === route.path) {
+                        // 切换路由之前需要先将之前的数据清空
+                        goodsList.value = [];
+                        // 将页码设置会初始值
+                        reqParams = {
+                            page: 1,
+                            pageSize: 20,
+                        };
+                        // 将加载完毕动画关闭
+                        finished.value = false;
                     }
-                    finished.value = false
                 }
-            })
+            );
         }
 
-        function sortChange (sortParams) {
-            reqParams = { ...reqParams, ...sortParams }
-            reqParams.page = 1
-            goodsList.value = []
-            finished.value = false
-            getData()
+        function sortChange(sortParams) {
+            reqParams = { ...reqParams, ...sortParams };
+            reqParams.page = 1;
+            goodsList.value = [];
+            finished.value = false;
+            getData();
         }
 
-        function filterChange (filterParams) {
-            reqParams = { ...reqParams, ...filterParams }
-            reqParams.page = 1
-            goodsList.value = []
-            finished.value = false
+        function filterChange(filterParams) {
+            reqParams = { ...reqParams, ...filterParams };
+            reqParams.page = 1;
+            goodsList.value = [];
+            finished.value = false;
         }
 
         return {
@@ -97,10 +110,10 @@ export default {
             getData,
             goodsList,
             sortChange,
-            filterChange
-        }
-    }
-}
+            filterChange,
+        };
+    },
+};
 </script>
 
 <style lang="less" scoped>

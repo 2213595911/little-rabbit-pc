@@ -1,5 +1,5 @@
 <template>
-    <RouterLink :to="`/category/sub/${good.id}`" class="goods-item">
+    <RouterLink :to="`/product/${good.id}`" class="goods-item">
         <img v-lazy="good.picture" alt="" />
         <p class="name ellipsis">{{ good.name }}</p>
         <p class="desc ellipsis">{{ good.desc }}</p>
@@ -9,14 +9,14 @@
 
 <script>
 export default {
-    name: 'GoodsItem',
+    name: "GoodsItem",
     props: {
         good: {
             type: Object,
-            default: {}
-        }
-    }
-}
+            default: {},
+        },
+    },
+};
 </script>
 
 <style scoped lang="less">
