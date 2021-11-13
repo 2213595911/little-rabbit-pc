@@ -20,6 +20,8 @@
                 <div class="spec">
                     <!-- 商品标题参数 -->
                     <GoodName :goods="goods" />
+                    <!-- sku模块 -->
+                    <GoodSku :goods="goods" />
                 </div>
             </div>
             <!-- 商品推荐 -->
@@ -44,12 +46,13 @@ import GoodsRelevant from "./components/goods-relevant";
 import GoodsImage from "./components/goods-image";
 import GoodsSales from "./components/goods-sales";
 import GoodName from "./components/goods-name";
+import GoodSku from "./components/goods-sku";
 import { findGoods } from "@/api/product";
 import { nextTick, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 export default {
     name: "XtxGoodsPage",
-    components: { GoodsRelevant, GoodsImage, GoodsSales, GoodName },
+    components: { GoodsRelevant, GoodsImage, GoodsSales, GoodName, GoodSku },
     setup() {
         const goods = useGoods();
         return { goods };
