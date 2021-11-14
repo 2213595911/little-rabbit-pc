@@ -21,7 +21,7 @@
                     <!-- 商品标题参数 -->
                     <GoodName :goods="goods" />
                     <!-- sku模块 -->
-                    <GoodSku :goods="goods" />
+                    <GoodSku :goods="goods" skuId="1369155872197971970" @change="changeSku" />
                 </div>
             </div>
             <!-- 商品推荐 -->
@@ -55,7 +55,15 @@ export default {
     components: { GoodsRelevant, GoodsImage, GoodsSales, GoodName, GoodSku },
     setup() {
         const goods = useGoods();
-        return { goods };
+        function changeSku(sku) {
+            if (sku.skuId) {
+                // 获得sku组件传递的信息之后修改页面的价格显示
+                goods.value.price = sku.price;
+                goods.value.oldPrice = sku.oldPrice;
+                goods.value.inventory = sku.inventory;
+            }
+        }
+        return { goods, changeSku };
     },
 };
 function useGoods() {

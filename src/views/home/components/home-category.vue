@@ -18,7 +18,7 @@
             <h4>{{ currentCat && currentCat.goods ? "分类" : "品牌" }}推荐 <small>根据您的购买或浏览记录推荐</small></h4>
             <ul v-if="currentCat && currentCat.goods && currentCat.goods.length">
                 <li v-for="item in currentCat.goods" :key="item.id">
-                    <RouterLink to="/">
+                    <RouterLink :to="`/product/${item.id}`">
                         <img :src="item.picture" alt="" />
                         <div class="info">
                             <p class="name ellipsis-2">{{ item.name }}</p>
@@ -60,7 +60,7 @@ export default {
             children: [{ id: "brand-children", name: "品牌推荐" }],
         });
         const menuList = computed(() => {
-            // 将一级分类里面的二级分类只保存2哥
+            // 将一级分类里面的二级分类只保存2个
             const list = store.state.category.categoryList.map((item) => ({ ...item, children: item.children && item.children.slice(0, 2) }));
             list.push(brand);
             return list;

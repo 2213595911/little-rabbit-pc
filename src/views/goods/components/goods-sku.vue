@@ -69,6 +69,17 @@ function updatedisabled(specs, pathMap) {
         });
     });
 }
+// 默认选中的sku组合
+function defaultSelected(goods, skuId) {
+    // 找到符合传入id的sku组合
+    const sku = goods.skus.find((item) => item.id === skuId);
+    // 根据sku组合中的参数遍历数据然后将符合条件的设为选中状态
+    if (sku) {
+        goods.specs.forEach((val, i) => {
+            val.values.find((value) => (value.selected = value.name === sku.specs[i].valueName));
+        });
+    }
+}
 export default {
     name: "GoodSku",
     props: {
@@ -76,8 +87,16 @@ export default {
             type: Object,
             default: () => {},
         },
+        skuId: {
+            type: String,
+            default: "",
+        },
     },
-    setup(props) {
+    setup(props, { emit }) {
+        // 初始化的时候进行默认选择地址
+        if (props.skuId) {
+            defaultSelected(props.goods, props.skuId);
+        }
         // 获取路径地图导航
         const pathMap = getPathMap(props.goods.skus);
         // 初始化调用
@@ -93,6 +112,24 @@ export default {
                 val.selected = true;
             }
             updatedisabled(props.goods.specs, pathMap);
+            const validSelectedArr = getSelectedArr(props.goods.specs).filter((v) => v);
+            if (validSelectedArr.length === props.goods.specs.length) {
+                // 根据路径字典获得选中的sku组合id
+                const skuIds = pathMap[validSelectedArr.join(spliter)];
+                // 从sku组中找到对应的数据
+                const sku = props.goods.skus.find((sku) => sku.id === skuIds[0]);
+                // 父组件需要的数据是 {skuId,price,oldPrice,inventory,specsText}
+                emit("change", {
+                    skuId: sku.id,
+                    price: sku.price,
+                    oldPrice: sku.oldPrice,
+                    inventory: sku.inventory,
+                    // 需要拼接出一条完整信息的字符串
+                    specsText: sku.specs.reduce((p, c) => (p += ` ${c.name}:${c.valueName}`), "").trim(),
+                });
+            } else {
+                emit("change", {});
+            }
         }
 
         return { changeSku };
